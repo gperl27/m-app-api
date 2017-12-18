@@ -22,6 +22,7 @@ module.exports = {
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
 
 
+
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
@@ -35,6 +36,13 @@ module.exports = {
       collection: 'event',
       via: 'owner'
     }
+
+  },
+
+  afterUpdate: function (post, cb) {
+    console.log(post, 'update happened');
+    User.publishUpdate(post.owner, { status: 'ok' });
+    cb();
 
   },
 

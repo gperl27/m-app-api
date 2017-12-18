@@ -23,24 +23,37 @@ module.exports = {
       columnType: 'date'
     },
 
-    
+    todos: {
+      type: 'json',
+      columnType: 'array',
+      defaultsTo: [{ text: "New Task", completed: false }]
+    },
+
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗
     //  ╚═╝╩ ╩╚═╝╚═╝═╩╝╚═╝
-    
-    
+
+
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-    
-    todos: {
-      collection: 'todo',
-      via: 'owner'
-    },
-    
+
+
+    // todos: {
+    //   collection: 'todo',
+    //   via: 'owner'
+    // },
+
     owner: {
       model: 'user'
     }
+  },
+
+  afterUpdate: function (post, cb) {
+
+    User.publish([post.owner], post);
+    cb();
+
   },
 
 };
